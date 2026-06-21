@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { beAliveProject } from "@/data/portfolio";
 import { Badge } from "./ui/Badge";
 import { FadeIn } from "./ui/FadeIn";
@@ -5,34 +6,15 @@ import { GlassCard } from "./ui/GlassCard";
 
 function GamePreview() {
   return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-gradient-to-br from-[#0a1628] via-[#0d2137] to-[#1a3a2a]">
-      <div className="absolute inset-0 opacity-30">
-        <svg className="h-full w-full" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <pattern id="pixel-grid" width="16" height="16" patternUnits="userSpaceOnUse">
-              <rect width="16" height="16" fill="none" stroke="rgba(255,255,255,0.03)" />
-            </pattern>
-          </defs>
-          <rect width="400" height="225" fill="url(#pixel-grid)" />
-          <ellipse cx="200" cy="280" rx="180" ry="80" fill="#2d5a3d" opacity="0.6" />
-          <ellipse cx="200" cy="300" rx="160" ry="60" fill="#3d7a4d" opacity="0.4" />
-          <circle cx="120" cy="140" r="8" fill="#5a8f5a" />
-          <circle cx="280" cy="130" r="10" fill="#4a7f4a" />
-          <circle cx="200" cy="120" r="6" fill="#6aaf6a" />
-          <rect x="185" y="155" width="30" height="40" rx="4" fill="#e8c49a" />
-          <rect x="180" y="145" width="40" height="15" rx="3" fill="#8b5e3c" />
-        </svg>
-      </div>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-4xl font-bold tracking-wider text-white/90">BE ALIVE</p>
-          <p className="mt-1 text-sm text-white/50">Island Survival</p>
-        </div>
-      </div>
-      <div className="absolute bottom-3 left-3 flex gap-2">
-        <span className="rounded bg-black/50 px-2 py-0.5 text-xs text-amber-300">Day 3</span>
-        <span className="rounded bg-black/50 px-2 py-0.5 text-xs text-red-300">HP 78</span>
-      </div>
+    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black">
+      <Image
+        src="/images/be-alive/screenshot.png"
+        alt={`${beAliveProject.title} gameplay screenshot`}
+        fill
+        className="object-cover object-center"
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        priority
+      />
     </div>
   );
 }
@@ -63,10 +45,12 @@ export function BeAliveProject() {
               {beAliveProject.description}
             </p>
 
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
               {beAliveProject.metrics.map((m) => (
-                <div key={m.label}>
-                  <p className="text-2xl font-semibold text-[var(--color-text)]">{m.value}</p>
+                <div key={m.label} className="min-w-0">
+                  <p className="text-2xl font-semibold tabular-nums text-[var(--color-text)]">
+                    {m.value}
+                  </p>
                   <p className="text-xs text-[var(--color-text-muted)]">{m.label}</p>
                 </div>
               ))}

@@ -68,8 +68,8 @@ export const beAliveProject = {
   metrics: [
     { label: "Lines of C++", value: "600+" },
     { label: "World Size", value: "4000×4000" },
-    { label: "Craft Recipes", value: "4+" },
     { label: "Enemy Types", value: "3" },
+    { label: "Craft Recipes", value: "4+" },
   ],
 };
 
