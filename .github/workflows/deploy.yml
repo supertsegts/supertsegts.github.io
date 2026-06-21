@@ -12,11 +12,14 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,13 +41,23 @@ jobs:
         with:
           path: out
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
+      - name: Wait for in-progress Pages deployment
+        run: |
+          for attempt in $(seq 1 20); do
+            status=$(gh api "repos/${GITHUB_REPOSITORY}/pages/deployments" --jq '.[0].status' 2>/dev/null || echo "unknown")
+            if [ "$status" = "in_progress" ] || [ "$status" = "queued" ]; then
+              echo "Pages deployment is ${status}. Waiting 30s (attempt ${attempt}/20)..."
+              sleep 30
+            else
+              echo "Ready to deploy (latest status: ${status})."
+              exit 0
+            fi
+          done
+          echo "Timed out waiting for in-progress deployment."
+          exit 1
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
