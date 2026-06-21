@@ -1,15 +1,15 @@
-import { neuralNetworkProject } from "@/data/portfolio";
+import { neuralNetworkProject, type ExperimentResult } from "@/data/portfolio";
 import { Badge } from "./ui/Badge";
 import { FadeIn } from "./ui/FadeIn";
 import { GlassCard } from "./ui/GlassCard";
 
-const resultVariant = {
-  best: "success" as const,
-  warning: "warning" as const,
-  neutral: "default" as const,
+const resultVariant: Record<ExperimentResult, "success" | "warning" | "default"> = {
+  best: "success",
+  warning: "warning",
+  neutral: "default",
 };
 
-function LossBar({ loss, result }: { loss: string; result: keyof typeof resultVariant }) {
+function LossBar({ loss, result }: { loss: string; result: ExperimentResult }) {
   const numericLoss = parseFloat(loss);
   const width = Math.max(8, Math.min(100, (1 - numericLoss) * 100));
 
@@ -62,26 +62,29 @@ export function NeuralNetworkProject() {
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          {neuralNetworkProject.experiments.map((exp) => (
+          {neuralNetworkProject.experiments.map((exp) => {
+            const result = exp.result as ExperimentResult;
+            return (
             <div
               key={`${exp.dataset}-${exp.config}`}
               className="rounded-xl border border-[var(--color-border)] bg-white/[0.02] p-5"
             >
               <div className="flex items-center justify-between gap-2">
                 <h4 className="font-medium text-[var(--color-text)]">{exp.dataset}</h4>
-                <Badge variant={resultVariant[exp.result]}>
-                  {exp.result === "best" ? "Best run" : exp.result === "warning" ? "Overfit" : "Partial"}
+                <Badge variant={resultVariant[result]}>
+                  {result === "best" ? "Best run" : result === "warning" ? "Overfit" : "Partial"}
                 </Badge>
               </div>
               <p className="mt-1 font-mono text-xs text-[var(--color-text-muted)]">
                 {exp.config}
               </p>
-              <LossBar loss={exp.loss} result={exp.result} />
+              <LossBar loss={exp.loss} result={result} />
               <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">
                 {exp.insight}
               </p>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="mt-8 rounded-xl border border-[var(--color-accent)]/20 bg-[var(--color-accent-soft)] p-5">

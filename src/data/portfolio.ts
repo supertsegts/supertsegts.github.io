@@ -73,6 +73,8 @@ export const beAliveProject = {
   ],
 };
 
+export type ExperimentResult = "best" | "warning" | "neutral";
+
 export const neuralNetworkProject = {
   id: "neural-network",
   title: "Neural Network Lab",
