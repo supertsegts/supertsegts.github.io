@@ -7,7 +7,6 @@ export const site = {
   tagline: "Software Engineer & Designer",
   subtitle:
     "I build survival games in C++, experiment with neural networks, and design interfaces people love to use.",
-  email: "", // Add your email in portfolio.ts to show the Email button
   github: "https://github.com/supertsegts",
   githubUsername: "supertsegts",
 };
@@ -162,20 +161,5 @@ export const contact = {
   heading: "Let's build something together",
   description:
     "I'm open to internships, collaborations, and interesting projects. Reach out — I'd love to hear from you.",
-  links: [
-    {
-      label: "GitHub",
-      href: "https://github.com/supertsegts",
-      icon: "github",
-    },
-    ...(site.email
-      ? [
-          {
-            label: "Email",
-            href: `mailto:${site.email}`,
-            icon: "email" as const,
-          },
-        ]
-      : []),
-  ],
+  emailButtonLabel: "Email me",
 };
