@@ -36,7 +36,7 @@ export function BeAliveProject() {
             <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
               {beAliveProject.title}
               <span className="ml-2 text-[var(--color-text-muted)]">
-                — {beAliveProject.subtitle}
+                · {beAliveProject.subtitle}
               </span>
             </h3>
 

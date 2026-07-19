@@ -21,7 +21,7 @@ export default function Home() {
             <SectionHeader
               label="Projects"
               title="Selected work"
-              description="From survival games in C++ to hands-on neural network experiments — I build to learn, then polish to ship."
+              description="From survival games in C++ to hands-on neural network experiments. I build to learn, then polish to ship."
             />
             <div className="space-y-8">
               <BeAliveProject />
